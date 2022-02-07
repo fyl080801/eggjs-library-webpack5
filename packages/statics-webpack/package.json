@@ -22,5 +22,13 @@
       "static",
       "nunjucks"
     ]
+  },
+  "dependencies": {
+    "egg-view-nunjucks": "^2.3.0",
+    "webpack-dev-middleware": "^5.3.1"
+  },
+  "devDependencies": {
+    "egg-request-curl": "^1.1.0",
+    "webpack": "^5.68.0"
   }
 }

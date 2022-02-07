@@ -1,4 +1,15 @@
 {
   "packages": ["packages/*", "ui/*"],
-  "version": "independent"
+  "version": "independent",
+  "useWorkspaces": true,
+  "npmClient": "yarn",
+  "command": {
+    "publish": {
+      "registry": "https://registry.npmjs.org/",
+      "ignoreChanges": [".gitignore", ".eslintignore", "*.log", "*.md"]
+    },
+    "version": {
+      "conventionalCommits": false
+    }
+  }
 }
