@@ -1,0 +1,11 @@
+{
+  "name": "@egglib/sample-dev",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "eggPlugin": {
+    "name": "@egglib/sample-dev",
+    "dep": [
+      "@egglib/statics"
+    ]
+  }
+}
