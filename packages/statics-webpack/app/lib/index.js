@@ -22,19 +22,20 @@ module.exports = async (opts) => {
         path.join(root.path, 'webpack.config.js'))
     }
 
-    const haveHot = config.plugins?.find(
+    config.plugins = config.plugins || []
+
+    const haveHot = config.plugins.find(
       (item) => item instanceof webpack.HotModuleReplacementPlugin,
     )
 
     if (!haveHot) {
-      config.plugins = config.plugins || []
       config.plugins.push(new webpack.HotModuleReplacementPlugin())
     }
 
     compiler = webpack(config)
   }
 
-  if (!options.devMiddleware.publicPath) {
+  if (!options.devMiddleware || !options.devMiddleware.publicPath) {
     const { publicPath } = compiler.options.output
 
     if (!publicPath) {
@@ -42,6 +43,8 @@ module.exports = async (opts) => {
         "egglib/webpack: publicPath must be set on `dev` options, or in a compiler's `output` configuration.",
       )
     }
+
+    options.devMiddleware = options.devMiddleware || {}
 
     options.devMiddleware.publicPath = publicPath
   }

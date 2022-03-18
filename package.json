@@ -12,14 +12,17 @@
     "declarations": false
   },
   "dependencies": {
+    "@egglib/statics": "^1.0.5",
     "egg": "^2.34.0",
-    "egg-scripts": "^2.15.3"
+    "egg-request-curl": "^1.1.0",
+    "egg-scripts": "^2.15.3",
+    "egg-view-nunjucks": "^2.3.0"
   },
   "devDependencies": {
     "cz-conventional-changelog": "^3.3.0",
     "egg-bin": "^4.18.1",
     "egg-mock": "^4.2.0",
-    "eslint": "^8.11.0",
+    "eslint": "7",
     "eslint-config-egg": "^11.0.1",
     "husky": "^7.0.4",
     "lerna": "^4.0.0",

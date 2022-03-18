@@ -2,6 +2,9 @@
 
 'use strict'
 
+const fs = require('fs')
+const path = require('path')
+
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
@@ -12,16 +15,30 @@ module.exports = (appInfo) => {
    **/
   const config = (exports = {})
 
-  // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1647579079949_5785'
 
-  // add your middleware config here
+  config.development = {
+    overrideDefault: true,
+    overrideIgnore: false,
+    watchDirs: ['app', 'config', 'app.js', 'agent.js', 'packages', 'pages'],
+    ignoreDirs: [
+      'node_modules',
+      ...fs
+        .readdirSync(path.resolve(process.cwd(), 'packages'))
+        .map((dir) => `packages/${dir}/src`),
+    ],
+  }
+
+  config.view = {
+    defaultViewEngine: 'nunjucks',
+    mapping: {
+      '.html': 'nunjucks',
+    },
+  }
+
   config.middleware = []
 
-  // add your user config here
-  const userConfig = {
-    // myAppName: 'egg',
-  }
+  const userConfig = {}
 
   return {
     ...config,

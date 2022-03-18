@@ -11,22 +11,14 @@ module.exports = (app) => {
   }
 
   app.setProvider({
-    setConfig({ name, rootPath }) {
-      const Service = require('@vue/cli-service')
+    setConfig({ name }) {
+      const config =
+        app.config.statics &&
+        app.config.statics.clients &&
+        app.config.statics.clients[name]
 
-      const ins = new Service(rootPath)
-
-      ins.init(process.env.NODE_ENV)
-
-      const config = ins.resolveWebpackConfig()
-
-      app.webpackConfigs[name] = {
-        config,
-        devMiddleware: {
-          publicPath: config.output.publicPath,
-          // serverSideRender: true,
-        },
-        hotClient: {},
+      if (config) {
+        app.webpackConfigs[name] = config.config
       }
     },
 
