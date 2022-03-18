@@ -1,14 +1,12 @@
-const STATICS = Symbol('Application#statcis')
+'use strict'
+
+const WEBPACK = Symbol('Application#WEBPACK')
 
 module.exports = {
-  get statics() {
-    if (!this[STATICS]) {
-      this[STATICS] = {}
+  get webpackConfigs() {
+    if (!this[WEBPACK]) {
+      this[WEBPACK] = {}
     }
-    return this[STATICS]
+    return this[WEBPACK]
   },
-
-  addPageConfig(name, dir) {},
-
-  viewInject(name, view) {},
 }

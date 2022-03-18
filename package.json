@@ -2,39 +2,52 @@
   "name": "eggjs-library-webpack5",
   "version": "1.0.0",
   "description": "",
-  "license": "ISC",
-  "private": "true",
+  "author": "",
+  "license": "MIT",
+  "private": true,
   "workspaces": [
-    "packages/*",
-    "ui/*"
+    "packages/*"
   ],
-  "author": "fyl080801",
-  "scripts": {
-    "dev": "node index.js",
-    "start": "egg-scripts start --daemon --title=egglib",
-    "stop": "egg-scripts stop --title=egglib",
-    "debug": "egg-bin debug --env=prod",
-    "postinstall": "husky install",
-    "commit": "git add . && git status && git-cz",
-    "lint": "eslint .",
-    "lint-staged": "lint-staged"
+  "egg": {
+    "declarations": false
   },
   "dependencies": {
-    "egg": "^2.33.1",
-    "egg-scripts": "^2.15.2",
-    "egg-view-nunjucks": "^2.3.0"
+    "egg": "^2.34.0",
+    "egg-scripts": "^2.15.3"
   },
   "devDependencies": {
     "cz-conventional-changelog": "^3.3.0",
-    "egg-bin": "^4.17.0",
-    "egg-request-curl": "^1.1.0",
-    "eslint": "^8.8.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^4.0.0",
+    "egg-bin": "^4.18.1",
+    "egg-mock": "^4.2.0",
+    "eslint": "^8.11.0",
+    "eslint-config-egg": "^11.0.1",
     "husky": "^7.0.4",
     "lerna": "^4.0.0",
-    "lint-staged": "^12.3.3",
-    "prettier": "^2.5.1"
+    "lint-staged": "^12.3.7",
+    "rimraf": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "scripts": {
+    "prebuild": "npm run clean",
+    "clean": "lerna run clean --parallel && rimraf dist",
+    "build": "lerna run build",
+    "start": "egg-scripts start --daemon --title=egg-server-eggjs-test1 --env=prod",
+    "stop": "egg-scripts stop --title=egg-server-eggjs-test1",
+    "dev": "egg-bin dev",
+    "debug": "egg-bin debug --env=prod",
+    "lint": "eslint .",
+    "prepack": "yarn run build",
+    "postinstall": "husky install",
+    "publish": "lerna publish",
+    "postpublish": "yarn run clean",
+    "commit": "git add . && git status && git-cz",
+    "lint-staged": "lint-staged"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
   },
   "config": {
     "commitizen": {
