@@ -1,7 +1,5 @@
 'use strict'
 
-const path = require('path')
-
 const CliService = require('@vue/cli-service')
 
 const service = new CliService(process.cwd())

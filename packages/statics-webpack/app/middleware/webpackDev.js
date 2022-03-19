@@ -4,9 +4,15 @@ const webpack = require('webpack')
 const k2c = require('koa2-connect')
 const DevServer = require('webpack-dev-server')
 
-const getClient = (compiler) => {
+const defaultDevServer = {
+  allowedHosts: 'all',
+}
+
+const getClient = (config, compiler) => {
+  const devServerConfig = Object.assign(defaultDevServer, config || {})
+
   return new Promise((resolve) => {
-    const server = new DevServer({}, compiler)
+    const server = new DevServer(devServerConfig, compiler)
 
     server.start().then(() => {
       resolve(server)
@@ -19,7 +25,7 @@ const getMiddleware = async (options) => {
 
   options.output = compiler.options.output
 
-  const hotClient = await getClient(compiler)
+  const hotClient = await getClient(options.devServer, compiler)
 
   return k2c(hotClient.middleware)
 }
