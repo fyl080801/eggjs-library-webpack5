@@ -4,19 +4,18 @@ const path = require('path')
 
 const CliService = require('@vue/cli-service')
 
-const service = new CliService(path.resolve(process.cwd(), 'packages/w5test'))
+const service = new CliService(process.cwd())
 
 service.init(process.env.NODE_ENV)
 
+const { name } = require('../package.json')
+
 exports.statics = {
-  default: '@egglib/w5test',
+  default: name,
   clients: {
-    '@egglib/w5test': {
+    [name]: {
       dev: true,
-      config: {
-        config: service.resolveWebpackConfig(),
-        devMiddleware: {},
-      },
+      config: service.resolveWebpackConfig(),
     },
   },
   env: {},

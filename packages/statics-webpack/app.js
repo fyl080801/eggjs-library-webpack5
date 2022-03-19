@@ -18,7 +18,7 @@ module.exports = (app) => {
         app.config.statics.clients[name]
 
       if (config) {
-        app.webpackConfigs[name] = config.config
+        app.webpackConfigs[name] = config
       }
     },
 
@@ -27,7 +27,8 @@ module.exports = (app) => {
 
       const viewUrl = `${ctx.request.protocol}://${path.join(
         ctx.request.host,
-        (config.devMiddleware || {}).publicPath,
+        // '/eggjs-library-webpack5/',
+        (config.output || {}).publicPath,
         view,
       )}`
 

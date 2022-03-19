@@ -15,13 +15,12 @@
   },
   "scripts": {},
   "dependencies": {
-    "app-root-path": "^3.0.0",
     "egg-request-curl": "^1.1.0",
-    "egg-view-nunjucks": "^2.3.0"
+    "egg-view-nunjucks": "^2.3.0",
+    "koa2-connect": "^1.0.2"
   },
   "peerDependencies": {
-    "webpack": "5",
-    "webpack-dev-middleware": "5",
+    "webpack": "^5.70.0",
     "webpack-dev-server": "^4.7.4"
   },
   "bugs": {

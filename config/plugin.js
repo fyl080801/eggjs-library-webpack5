@@ -13,7 +13,4 @@ module.exports = {
   '@egglib/statics': {
     enable: true,
   },
-  '@egglib/w5test': {
-    enable: true,
-  },
 }
