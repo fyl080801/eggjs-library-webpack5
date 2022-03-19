@@ -4,7 +4,7 @@ const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const k2c = require('koa2-connect')
-const kc = require('koa-compose')
+const { compose } = require('compose-middleware')
 
 const getMiddleware = async (options) => {
   const { config, hotClient } = options
@@ -46,7 +46,7 @@ const getMiddleware = async (options) => {
 
   const dev = webpackDevMiddleware(compiler, {})
 
-  return kc([k2c(dev), k2c(hot)])
+  return k2c(compose([dev, hot]))
 }
 
 module.exports = (_, app) => {
