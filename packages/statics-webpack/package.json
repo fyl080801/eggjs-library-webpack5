@@ -17,11 +17,13 @@
   "dependencies": {
     "egg-request-curl": "^1.1.0",
     "egg-view-nunjucks": "^2.3.0",
-    "koa2-connect": "^1.0.2"
+    "koa-compose": "^4.1.0",
+    "koa2-connect": "^1.0.2",
+    "webpack-hot-middleware": "^2.25.1"
   },
   "peerDependencies": {
     "webpack": "^5.70.0",
-    "webpack-dev-server": "^4.7.4"
+    "webpack-dev-middleware": "^5.3.1"
   },
   "bugs": {
     "url": "https://github.com/fyl080801/eggjs-library-webpack5/issues"

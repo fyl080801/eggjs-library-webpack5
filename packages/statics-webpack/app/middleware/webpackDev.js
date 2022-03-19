@@ -1,38 +1,57 @@
 'use strict'
 
 const webpack = require('webpack')
+const webpackDevMiddleware = require('webpack-dev-middleware')
+const webpackHotMiddleware = require('webpack-hot-middleware')
 const k2c = require('koa2-connect')
-const DevServer = require('webpack-dev-server')
-
-const defaultDevServer = {
-  allowedHosts: 'all',
-}
-
-const getClient = (config, compiler) => {
-  const devServerConfig = Object.assign(defaultDevServer, config || {})
-
-  return new Promise((resolve) => {
-    const server = new DevServer(devServerConfig, compiler)
-
-    server.start().then(() => {
-      resolve(server)
-    })
-  })
-}
+const kc = require('koa-compose')
 
 const getMiddleware = async (options) => {
-  const compiler = webpack(options.config)
+  const { config, hotClient } = options
+
+  const compiler = webpack({
+    ...config,
+    devServer: { hot: false, client: false },
+  })
 
   options.output = compiler.options.output
 
-  const hotClient = await getClient(options.devServer, compiler)
+  const additionalEntries = [
+    `${require.resolve('webpack-hot-middleware/client')}`,
+  ]
 
-  return k2c(hotClient.middleware)
+  for (const comp of [].concat(compiler.compilers || compiler)) {
+    comp.hooks.make.tapPromise('@egglib/webpack', (compilation) => {
+      return Promise.all(
+        additionalEntries.map((entry) => {
+          return new Promise((resolve, reject) => {
+            compilation.addEntry(
+              comp.context,
+              webpack.EntryPlugin.createDependency(entry, {}),
+              {},
+              (err) => {
+                if (err) return reject(err)
+                resolve()
+              },
+            )
+          })
+        }),
+      )
+    })
+
+    new webpack.HotModuleReplacementPlugin({}).apply(comp)
+  }
+
+  const hot = webpackHotMiddleware(compiler, hotClient || {})
+
+  const dev = webpackDevMiddleware(compiler, {})
+
+  return kc([k2c(dev), k2c(hot)])
 }
 
-module.exports = (options, app) => {
+module.exports = (_, app) => {
   Object.keys(app.webpackConfigs).forEach((key) => {
-    app.webpackServices[key] = getMiddleware(app.webpackConfigs[key])
+    app.webpackServices[key] = getMiddleware(app.webpackConfigs[key], app)
   })
 
   return async (ctx, next) => {
