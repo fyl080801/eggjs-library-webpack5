@@ -27,7 +27,6 @@ module.exports = (app) => {
 
       const viewUrl = `${ctx.request.protocol}://${path.join(
         ctx.request.host,
-        // '/eggjs-library-webpack5/',
         (config.output || {}).publicPath,
         view,
       )}`
